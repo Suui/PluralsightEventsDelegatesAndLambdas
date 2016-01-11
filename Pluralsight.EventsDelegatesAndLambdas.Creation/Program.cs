@@ -3,8 +3,6 @@
 
 namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 {
-	public delegate int WorkPerformedHandler(int workHours, WorkType workType);
-
 	public enum WorkType
 	{
 		GoToMeetings,
