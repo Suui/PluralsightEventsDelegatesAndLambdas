@@ -3,7 +3,7 @@
 
 namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 {
-	public delegate void WorkPerformedHandler(int workHours, WorkType workType);
+	public delegate int WorkPerformedHandler(int workHours, WorkType workType);
 
 	public enum WorkType
 	{
@@ -14,7 +14,7 @@ namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 
 	class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			var workDelegateOne = new WorkPerformedHandler(WorkPerformedOne);
 			var workDelegateTwo = new WorkPerformedHandler(WorkPerformedTwo);
@@ -25,31 +25,36 @@ namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 			// Multicast Delegate behind the scenes
 			workDelegateOne += workDelegateTwo + workDelegateThree;
 
+			// It's the last invoked delegate that returns its value
 			Console.WriteLine();
-			workDelegateOne(10, WorkType.GenerateReports);
+			var totalWorkHours = workDelegateOne(10, WorkType.GenerateReports);
+			Console.WriteLine("Total work hours: " + totalWorkHours);
 
 			Console.WriteLine();
 			DoWork(workDelegateOne);
 		}
 
-		static void DoWork(WorkPerformedHandler workDelegate)
+		private static void DoWork(WorkPerformedHandler workDelegate)
 		{
 			workDelegate(5, WorkType.Golf);
 		}
 
-		static void WorkPerformedOne(int workHours, WorkType workType)
+		private static int WorkPerformedOne(int workHours, WorkType workType)
 		{
 			Console.WriteLine("WorkPerformedOne called: " + workHours + " hours");
+			return workHours;
 		}
 
-		static void WorkPerformedTwo(int workHours, WorkType workType)
+		private static int WorkPerformedTwo(int workHours, WorkType workType)
 		{
 			Console.WriteLine("WorkPerformedTwo called: " + workHours + " hours");
+			return workHours;
 		}
 
-		private static void WorkPerformedThree(int workHours, WorkType workType)
+		private static int WorkPerformedThree(int workHours, WorkType workType)
 		{
 			Console.WriteLine("WorkPerformedThree called: " + workHours + " hours");
+			return workHours;
 		}
 	}
 }
