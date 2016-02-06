@@ -37,6 +37,9 @@ namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 			var worker = new Worker();
 			worker.WorkPerformed += WorkerWorkPerformed;	// new EventHandler<WorkPerformedEventArgs>(WorkerWorkPerformed);
 			worker.WorkCompleted += WorkerWorkCompleted;	// we use delegate inference instead
+
+			worker.WorkCompleted -= WorkerWorkCompleted;
+			worker.WorkCompleted += delegate { Console.WriteLine("Worker is done"); };
 			worker.DoWork(8, WorkType.GenerateReports);
 		}
 
