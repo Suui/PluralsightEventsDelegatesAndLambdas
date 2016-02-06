@@ -12,6 +12,7 @@ namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 		{
 			for (var hours = 1; hours <= workHours; hours++)
 			{
+				System.Threading.Thread.Sleep(1000);
 				OnWorkPerformed(hours, workType);
 			}
 			OnWorkCompleted();

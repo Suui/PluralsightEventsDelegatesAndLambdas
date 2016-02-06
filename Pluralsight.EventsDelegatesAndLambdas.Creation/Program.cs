@@ -33,8 +33,11 @@ namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 			Console.WriteLine();
 			DoWork(workDelegateOne);
 
+			Console.WriteLine();
 			var worker = new Worker();
-			worker.DoWork(5, WorkType.GenerateReports);
+			worker.WorkPerformed += WorkerWorkPerformed;	// new EventHandler<WorkPerformedEventArgs>(WorkerWorkPerformed);
+			worker.WorkCompleted += WorkerWorkCompleted;
+			worker.DoWork(8, WorkType.GenerateReports);
 		}
 
 		private static void DoWork(WorkPerformedHandler workDelegate)
@@ -58,6 +61,16 @@ namespace Pluralsight.EventsDelegatesAndLambdas.Creation
 		{
 			Console.WriteLine("WorkPerformedThree called: " + workHours + " hours");
 			return workHours;
+		}
+
+		private static void WorkerWorkPerformed(object sender, WorkPerformedEventArgs e)
+		{
+			Console.WriteLine("Hours worked: " + e.WorkHours + " " + e.WorkType);
+		}
+
+		private static void WorkerWorkCompleted(object sender, EventArgs e)
+		{
+			Console.WriteLine("Worker is done");
 		}
 	}
 }
